@@ -16,15 +16,17 @@ import com.example.project_w1.ui.theme.Project_w1Theme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            Project_w1Theme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
-            }
-        }
+        setContent { }
     }
+}
+
+@Composable
+fun MyApp() {
+    Surface(color = MaterialTheme.colors.background) {
+        Greeting("Android")
+        Text(text = "Android2", modifier= Modifier.padding(top = 80.dp))
+    }
+    Text(text = "Android3", modifier= Modifier.padding(top = 160.dp))
 }
 
 @Composable
@@ -37,6 +39,14 @@ fun Greeting(name: String) {
 @Composable
 fun Greeting2(name: String) {
     Text(text = "Hello $name!", modifier = Modifier.padding(24.dp))
+}
+
+@Preview(showBackground = false)
+@Composable
+fun newPreview() {
+    Project_w1Theme {
+        MyApp()
+    }
 }
 
 @Preview(showBackground = false, name = "no background, dark")
