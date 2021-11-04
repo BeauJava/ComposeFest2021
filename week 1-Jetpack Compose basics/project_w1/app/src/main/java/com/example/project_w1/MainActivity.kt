@@ -26,15 +26,48 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
+    Surface(color = MaterialTheme.colors.primary) {
+        Text(text = "Hello $name!")
+    }
+}
+
+@Composable
+fun Greeting2(name: String) {
     Text(text = "Hello $name!")
+}
+
+@Preview(showBackground = false, name = "no background, dark")
+@Preview(showBackground = true, name = "background, dark")
+@Composable
+fun DefaultPreview4() {
+    Project_w1Theme(darkTheme = true) {
+        Greeting2("Android")
+    }
 }
 
 @Preview(showBackground = false, name = "no background")
 @Preview(showBackground = true, name = "background")
 @Composable
-fun DefaultPreview() {
-    Project_w1Theme {
+fun DefaultPreview3() {
+    Project_w1Theme() {
+        Greeting2("Android")
+    }
+}
+
+@Preview(showBackground = false, name = "surface, no background, dark")
+@Preview(showBackground = true, name = "surface, background, dark")
+@Composable
+fun DefaultPreview2() {
+    Project_w1Theme(darkTheme = true) {
         Greeting("Android")
+    }
+}
+
+@Preview(showBackground = false, name = "surface, no background")
+@Preview(showBackground = true, name = "surface, background")
+@Composable
+fun DefaultPreview() {
+    Project_w1Theme() {
         Greeting("Android")
     }
 }
