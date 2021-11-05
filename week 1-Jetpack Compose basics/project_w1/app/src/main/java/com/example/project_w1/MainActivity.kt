@@ -6,9 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -27,9 +25,14 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp(ss: List<String> = listOf("android", "compose", "codelab", "gdg")) {
-    Column(modifier = Modifier.padding(vertical = 4.dp)) {
-        for (s in ss) {
-            Greeting(s)
+    var showOnboarding by remember { mutableStateOf(true) }
+    if (showOnboarding) {
+        board { showOnboarding = false }
+    } else {
+        Column(modifier = Modifier.padding(vertical = 4.dp)) {
+            for (s in ss) {
+                Greeting(s)
+            }
         }
     }
 }
@@ -68,10 +71,29 @@ fun Greeting(name: String) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 320)
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
 fun newPreview() {
     Project_w1Theme {
         MyApp()
+    }
+}
+
+@Composable
+fun board(callback: () -> Unit) {
+    Surface {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Hello android")
+            Button (
+                modifier = Modifier.padding(vertical = 24.dp),
+                onClick = callback
+            ) {
+                Text("Continue")
+            }
+        }
     }
 }
