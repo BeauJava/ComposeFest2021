@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -27,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp(ss: List<String> = List(1000) { "$it" }) {
-    var showOnboarding by remember { mutableStateOf(false) }
+    var showOnboarding by rememberSaveable { mutableStateOf(false) }
     if (showOnboarding) {
         board { showOnboarding = false }
     } else {
