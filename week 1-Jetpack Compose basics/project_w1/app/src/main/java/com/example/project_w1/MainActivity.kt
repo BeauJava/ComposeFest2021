@@ -3,6 +3,9 @@ package com.example.project_w1
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -42,7 +45,14 @@ fun MyApp(ss: List<String> = List(1000) { "$it" }) {
 
 @Composable
 fun Greeting(name: String) {
-    val expanded = remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
+    val animationPadding by animateDpAsState(
+        if (expanded) 60.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
@@ -51,11 +61,11 @@ fun Greeting(name: String) {
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(bottom = if (expanded.value) 40.dp else 0.dp)
+                    .padding(bottom = animationPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello~")
                 Text(text = "$name!")
-                if (expanded.value) {
+                if (expanded) {
                     Surface(
                         color = MaterialTheme.colors.secondary,
                         modifier = Modifier.padding(8.dp)
@@ -65,10 +75,10 @@ fun Greeting(name: String) {
                 }
             }
             OutlinedButton(
-                onClick = { expanded.value = !expanded.value },
+                onClick = { expanded = !expanded },
                 modifier = Modifier.align(CenterVertically)
             ) {
-                Text((if (expanded.value) "hide you " else "show you ") + name)
+                Text((if (expanded) "hide you " else "show you ") + name)
             }
         }
     }
