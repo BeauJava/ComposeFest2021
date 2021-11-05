@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,13 +26,13 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(ss: List<String> = listOf("android", "compose", "codelab", "gdg")) {
-    var showOnboarding by remember { mutableStateOf(true) }
+fun MyApp(ss: List<String> = List(1000) { "$it" }) {
+    var showOnboarding by remember { mutableStateOf(false) }
     if (showOnboarding) {
         board { showOnboarding = false }
     } else {
-        Column(modifier = Modifier.padding(vertical = 4.dp)) {
-            for (s in ss) {
+        LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
+            items(items = ss) { s ->
                 Greeting(s)
             }
         }
@@ -88,7 +90,7 @@ fun board(callback: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text("Hello android")
-            Button (
+            Button(
                 modifier = Modifier.padding(vertical = 24.dp),
                 onClick = callback
             ) {
