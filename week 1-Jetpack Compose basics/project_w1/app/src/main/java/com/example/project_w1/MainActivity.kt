@@ -3,6 +3,7 @@ package com.example.project_w1
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -21,24 +22,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        Greeting("Android")
-        Text(text = "Android2", modifier= Modifier.padding(top = 80.dp))
+fun MyApp(ss: List<String> = listOf("android", "compose", "codelab")) {
+    Column {
+        for (s in ss) {
+            Greeting(s)
+        }
     }
-    Text(text = "Android3", modifier= Modifier.padding(top = 160.dp))
 }
 
 @Composable
 fun Greeting(name: String) {
     Surface(color = MaterialTheme.colors.primary) {
-        Text(text = "Hello $name!", modifier = Modifier.padding(24.dp))
+        Column(modifier = Modifier.padding(24.dp)) {
+            Text(text = "Hello~")
+            Text(text = "$name!")
+        }
     }
-}
-
-@Composable
-fun Greeting2(name: String) {
-    Text(text = "Hello $name!", modifier = Modifier.padding(24.dp))
 }
 
 @Preview(showBackground = false)
@@ -46,41 +45,5 @@ fun Greeting2(name: String) {
 fun newPreview() {
     Project_w1Theme {
         MyApp()
-    }
-}
-
-@Preview(showBackground = false, name = "no background, dark")
-@Preview(showBackground = true, name = "background, dark")
-@Composable
-fun DefaultPreview4() {
-    Project_w1Theme(darkTheme = true) {
-        Greeting2("Android")
-    }
-}
-
-@Preview(showBackground = false, name = "no background")
-@Preview(showBackground = true, name = "background")
-@Composable
-fun DefaultPreview3() {
-    Project_w1Theme() {
-        Greeting2("Android")
-    }
-}
-
-@Preview(showBackground = false, name = "surface, no background, dark")
-@Preview(showBackground = true, name = "surface, background, dark")
-@Composable
-fun DefaultPreview2() {
-    Project_w1Theme(darkTheme = true) {
-        Greeting("Android")
-    }
-}
-
-@Preview(showBackground = false, name = "surface, no background")
-@Preview(showBackground = true, name = "surface, background")
-@Composable
-fun DefaultPreview() {
-    Project_w1Theme() {
-        Greeting("Android")
     }
 }
