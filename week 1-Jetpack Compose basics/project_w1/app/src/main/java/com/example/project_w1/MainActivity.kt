@@ -1,5 +1,6 @@
 package com.example.project_w1
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.project_w1.ui.theme.Project_w1Theme
@@ -64,7 +66,9 @@ fun Greeting(name: String) {
                     .padding(bottom = animationPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello~")
-                Text(text = "$name!")
+                Text(text = "$name!", style = MaterialTheme.typography.h4.copy(
+                    fontWeight = FontWeight.ExtraBold
+                ))
                 if (expanded) {
                     Surface(
                         color = MaterialTheme.colors.secondary,
@@ -84,6 +88,7 @@ fun Greeting(name: String) {
     }
 }
 
+@Preview(showBackground = true, widthDp = 320, heightDp = 320, uiMode = UI_MODE_NIGHT_YES)
 @Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
 fun newPreview() {
