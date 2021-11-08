@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">project_w1</string>
+    <string name="hide_you">\"hide you \"</string>
+    <string name="show_you">\"show you \"</string>
 </resources>
