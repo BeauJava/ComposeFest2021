@@ -30,6 +30,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.atLeast
+import androidx.constraintlayout.compose.atMost
 import coil.compose.rememberImagePainter
 import com.example.project_w2_1.ui.theme.Project_w2_1Theme
 import kotlinx.coroutines.launch
@@ -184,10 +187,12 @@ fun ConstraintLayoutContent() {
         ) {
             Text("Button")
         }
-        Text("Text", Modifier.constrainAs(text) {
-            top.linkTo(button.bottom, margin = 16.dp)
-            centerHorizontallyTo(parent)
-        })
+        val guideline = createGuidelineFromStart(fraction = 0.5f)
+        Text("TextTextTextTextTextTextTextTextTextTextTextText",
+            Modifier.constrainAs(text) {
+                linkTo(start = guideline, end = parent.end)
+                width = Dimension.preferredWrapContent.atMost(50.dp)
+            })
         val barrier = createEndBarrier(button, text)
         Button(
             onClick = { /* Do something */ },
