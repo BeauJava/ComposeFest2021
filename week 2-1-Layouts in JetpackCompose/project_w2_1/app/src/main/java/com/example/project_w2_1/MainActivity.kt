@@ -176,7 +176,7 @@ fun LayoutCodelabPreview() {
 @Composable
 fun ConstraintLayoutContent() {
     ConstraintLayout {
-        val (button, text) = createRefs()
+        val (button, text, button2) = createRefs()
         Button(onClick = {},
             modifier = Modifier.constrainAs(button) {
                 top.linkTo(parent.top, margin = 16.dp)
@@ -188,6 +188,43 @@ fun ConstraintLayoutContent() {
             top.linkTo(button.bottom, margin = 16.dp)
             centerHorizontallyTo(parent)
         })
+        val barrier = createEndBarrier(button, text)
+        Button(
+            onClick = { /* Do something */ },
+            modifier = Modifier.constrainAs(button2) {
+                top.linkTo(parent.top, margin = 16.dp)
+                start.linkTo(barrier)
+            }
+        ) {
+            Text("Button 2")
+        }
+    }
+}
+
+@Composable
+fun ConstraintLayoutContent2() {
+    ConstraintLayout {
+        val (button, text, button2) = createRefs()
+        Button(onClick = {},
+            modifier = Modifier.constrainAs(button) {
+                top.linkTo(parent.top, margin = 16.dp)
+            }
+        ) {
+            Text("Button")
+        }
+        Text("Text", Modifier.constrainAs(text) {
+            top.linkTo(button.bottom, margin = 16.dp)
+            centerHorizontallyTo(parent)
+        })
+        Button(
+            onClick = { /* Do something */ },
+            modifier = Modifier.constrainAs(button2) {
+                top.linkTo(parent.top, margin = 16.dp)
+                start.linkTo(button.end, margin = 16.dp)
+            }
+        ) {
+            Text("Button 2")
+        }
     }
 }
 
@@ -195,7 +232,7 @@ fun ConstraintLayoutContent() {
 @Composable
 fun LayoutCodelabPreview2() {
     Project_w2_1Theme {
-        Chip(text = "Hi there!")
+        ConstraintLayoutContent2()
     }
 }
 
