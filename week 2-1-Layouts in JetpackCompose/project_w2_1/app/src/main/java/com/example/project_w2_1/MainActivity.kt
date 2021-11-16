@@ -12,6 +12,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AirplaneTicket
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -33,39 +36,37 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PhotographerCard(modifier: Modifier = Modifier) {
-    Row(
-        modifier
-            .padding(8.dp)
-            .clip(RoundedCornerShape(4.dp))
-            .background(MaterialTheme.colors.surface)
-            .clickable(onClick = {})
-            .padding(16.dp)
-    ) {
-        Surface(
-            modifier = modifier.size(50.dp),
-            shape = CircleShape,
-            color = MaterialTheme.colors.onSurface.copy(alpha = 0.3f)
-        ) {
+fun LayoutCodelab() {
+    Scaffold(
+        topBar = {
+            TopAppBar (
+                title = {
+                    Text(text = "LayoutsCodelab")
+                },
+                actions = {
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Filled.AirplaneTicket, contentDescription = null)
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        BodyContent(Modifier.padding(innerPadding).padding(8.dp))
+    }
+}
 
-        }
-        Column(
-            modifier = modifier
-                .padding(start = 8.dp)
-                .align(Alignment.CenterVertically)
-        ) {
-            Text("Alfred Sysley", fontWeight = FontWeight.Bold)
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Text("3 hours ago", style = MaterialTheme.typography.body2)
-            }
-        }
+@Composable
+fun BodyContent(modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
+        Text(text = "Hi there!")
+        Text(text = "Thanks for going through the Layouts codelab")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PhotographerCardPreview() {
+fun LayoutCodelabPreview() {
     Project_w2_1Theme() {
-        PhotographerCard()
+        LayoutCodelab()
     }
 }
