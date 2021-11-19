@@ -17,22 +17,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester.Companion.createRefs
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.AlignmentLine
-import androidx.compose.ui.layout.FirstBaseline
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.layout
+import androidx.compose.ui.layout.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
-import androidx.constraintlayout.compose.atLeast
-import androidx.constraintlayout.compose.atMost
+import androidx.constraintlayout.compose.*
 import coil.compose.rememberImagePainter
 import com.example.project_w2_1.ui.theme.Project_w2_1Theme
 import kotlinx.coroutines.launch
@@ -176,30 +171,42 @@ fun LayoutCodelabPreview() {
     }
 }
 
+fun decoupledConstraints() : ConstraintSet {
+    return ConstraintSet {
+        val button = createRefFor("button")
+        val button2 = createRefFor("button2")
+        val text = createRefFor("text")
+        val guideline = createGuidelineFromStart(fraction = 0.5f)
+        val barrier = createEndBarrier(button, text)
+        constrain(button) {
+            top.linkTo(parent.top, margin = 16.dp)
+        }
+        constrain(text) {
+            linkTo(start = guideline, end = parent.end)
+            width = Dimension.preferredWrapContent.atMost(50.dp)
+        }
+        constrain(button2) {
+            top.linkTo(parent.top, margin = 16.dp)
+            start.linkTo(barrier)
+        }
+    }
+}
+
 @Composable
 fun ConstraintLayoutContent() {
-    ConstraintLayout {
-        val (button, text, button2) = createRefs()
+    val constraints = decoupledConstraints()
+    ConstraintLayout(constraints) {
         Button(onClick = {},
-            modifier = Modifier.constrainAs(button) {
-                top.linkTo(parent.top, margin = 16.dp)
-            }
+            modifier = Modifier.layoutId("button")
         ) {
             Text("Button")
         }
-        val guideline = createGuidelineFromStart(fraction = 0.5f)
         Text("TextTextTextTextTextTextTextTextTextTextTextText",
-            Modifier.constrainAs(text) {
-                linkTo(start = guideline, end = parent.end)
-                width = Dimension.preferredWrapContent.atMost(50.dp)
-            })
-        val barrier = createEndBarrier(button, text)
+            Modifier.layoutId("text"))
         Button(
             onClick = { /* Do something */ },
-            modifier = Modifier.constrainAs(button2) {
-                top.linkTo(parent.top, margin = 16.dp)
-                start.linkTo(barrier)
-            }
+            modifier = Modifier.layoutId("button2")
+
         ) {
             Text("Button 2")
         }
