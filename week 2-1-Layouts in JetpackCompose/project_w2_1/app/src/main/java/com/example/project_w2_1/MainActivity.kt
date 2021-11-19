@@ -163,11 +163,36 @@ fun MyOwnColumn(
     }
 }
 
-@Preview(showBackground = true)
+@Preview()
 @Composable
 fun LayoutCodelabPreview() {
     Project_w2_1Theme {
-        ConstraintLayoutContent()
+        Surface {
+            TwoTexts(text1 = "Hi", text2 = "there")
+        }
+    }
+}
+
+@Composable
+fun TwoTexts(modifier: Modifier = Modifier, text1: String, text2: String) {
+    Row(modifier = modifier.height(IntrinsicSize.Min)) {
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 4.dp)
+                .wrapContentWidth(Alignment.CenterHorizontally),
+            text = text1
+        )
+
+        Divider(color = Color.Black, modifier = Modifier.fillMaxHeight().width(1.dp))
+        Text(
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 4.dp)
+                .wrapContentWidth(Alignment.CenterHorizontally),
+
+            text = text2
+        )
     }
 }
 
@@ -237,14 +262,6 @@ fun ConstraintLayoutContent2() {
         ) {
             Text("Button 2")
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LayoutCodelabPreview2() {
-    Project_w2_1Theme {
-        ConstraintLayoutContent2()
     }
 }
 
