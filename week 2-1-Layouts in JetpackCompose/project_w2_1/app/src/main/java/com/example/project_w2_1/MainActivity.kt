@@ -173,6 +173,16 @@ fun LayoutCodelabPreview() {
     }
 }
 
+fun Modifier.modifyMinIntrinsicHeight(min: Int) = this.then(
+    layout {
+            measurable, constraints ->
+        val placeable = measurable.measure(constraints)
+        layout(placeable.width, min) {
+            placeable.placeRelative(0, 0)
+        }
+    }
+)
+
 @Composable
 fun TwoTexts(modifier: Modifier = Modifier, text1: String, text2: String) {
     Row(modifier = modifier.height(IntrinsicSize.Min)) {
@@ -187,6 +197,7 @@ fun TwoTexts(modifier: Modifier = Modifier, text1: String, text2: String) {
         Divider(color = Color.Black, modifier = Modifier.fillMaxHeight().width(1.dp))
         Text(
             modifier = Modifier
+                .modifyMinIntrinsicHeight(300)
                 .weight(1f)
                 .padding(end = 4.dp)
                 .wrapContentWidth(Alignment.CenterHorizontally),
