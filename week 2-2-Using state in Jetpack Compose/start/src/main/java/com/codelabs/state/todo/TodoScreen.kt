@@ -36,14 +36,20 @@ import com.codelabs.state.util.generateRandomTodoItem
 import kotlin.random.Random
 
 @Composable
-fun TodoInputTextField(text: String, onTextChange: (String) -> Unit, modifier: Modifier) {
-    TodoInputText(text, onTextChange, modifier)
+fun TodoInputTextField(text: String, onTextChange: (String) -> Unit, modifier: Modifier,
+onComplete: () -> Unit) {
+    TodoInputText(text, onTextChange, modifier, onComplete)
 }
 
 @Composable
 fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
     val (text, setText) = remember { mutableStateOf("") }
     val (icon, setIcon) = remember { mutableStateOf(TodoIcon.Default) }
+    val submit = {
+        onItemComplete(TodoItem(text, icon))
+        setIcon(TodoIcon.Default)
+        setText("")
+    }
     Column {
         Row(
             Modifier
@@ -55,14 +61,11 @@ fun TodoItemInput(onItemComplete: (TodoItem) -> Unit) {
                 setText,
                 Modifier
                     .weight(1f)
-                    .padding(end = 8.dp)
+                    .padding(end = 8.dp),
+                submit
             )
             TodoEditButton(
-                onClick = {
-                    onItemComplete(TodoItem(text, icon))
-                    setIcon(TodoIcon.Default)
-                    setText("")
-                },
+                onClick = submit,
                 text = "Add",
                 modifier = Modifier.align(Alignment.CenterVertically),
                 enabled = text.isNotBlank()
