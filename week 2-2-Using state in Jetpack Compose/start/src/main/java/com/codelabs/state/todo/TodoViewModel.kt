@@ -16,7 +16,10 @@
 
 package com.codelabs.state.todo
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,7 +27,12 @@ import androidx.lifecycle.ViewModel
 class TodoViewModel : ViewModel() {
 
     var todoItems = mutableStateListOf<TodoItem>()
-    private set
+        private set
+
+    private var currentEditIndex by mutableStateOf(-1)
+
+    val currentEditItem: TodoItem?
+        get() = todoItems.getOrNull(currentEditIndex)
 
     fun addItem(item: TodoItem) {
         todoItems.add(item)
