@@ -101,7 +101,10 @@ private fun AppBar() {
         title = {
             Text(text = stringResource(R.string.app_title))
         },
-        backgroundColor = MaterialTheme.colors.primary
+        backgroundColor =
+        if (MaterialTheme.colors.isLight)
+            MaterialTheme.colors.primary else
+            MaterialTheme.colors.primarySurface
     )
 }
 
