@@ -40,5 +40,22 @@ class TodoViewModel : ViewModel() {
 
     fun removeItem(item: TodoItem) {
         todoItems.remove(item)
+        onEditDone()
+    }
+
+    fun onEditItemSelected(item: TodoItem) {
+        currentEditIndex = todoItems.indexOf(item)
+    }
+
+    fun onEditDone() {
+        currentEditIndex = -1
+    }
+
+    fun onEditItemChange(item: TodoItem) {
+        val currentItem = requireNotNull(currentEditItem)
+        require(currentItem.id == item.id) {
+            ""
+        }
+        todoItems[currentEditIndex] = item
     }
 }
