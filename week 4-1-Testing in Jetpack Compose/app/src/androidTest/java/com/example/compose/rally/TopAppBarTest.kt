@@ -1,7 +1,9 @@
 package com.example.compose.rally
 
 import androidx.compose.material.Text
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.text.toUpperCase
 import com.example.compose.rally.ui.components.RallyTopAppBar
 import com.example.compose.rally.ui.theme.RallyTheme
 import org.junit.Assert.fail
@@ -20,10 +22,13 @@ class TopAppBarTest {
                 RallyTopAppBar(
                     allScreens = allScreens,
                     onTabSelected = {},
-                    currentScreen = RallyScreen.Overview
+                    currentScreen = RallyScreen.Accounts
                 )
             }
         }
-        Thread.sleep(5000)
+        composeTestRule.onRoot().printToLog("currentLabelExists")
+        composeTestRule
+            .onNodeWithContentDescription(RallyScreen.Accounts.name)
+            .assertIsSelected()
     }
 }
