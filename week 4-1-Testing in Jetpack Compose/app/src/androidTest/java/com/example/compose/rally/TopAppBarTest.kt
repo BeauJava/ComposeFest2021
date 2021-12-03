@@ -26,7 +26,7 @@ class TopAppBarTest {
                 )
             }
         }
-        composeTestRule.onRoot().printToLog("currentLabelExists")
+        composeTestRule.onRoot(useUnmergedTree = true).printToLog("currentLabelExists")
         composeTestRule
             .onNodeWithContentDescription(RallyScreen.Accounts.name)
             .assertIsSelected()
